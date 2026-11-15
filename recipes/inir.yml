@@ -1,0 +1,22 @@
+modules:
+  - type: dnf
+    install:
+      packages:
+        - niri
+  
+  - type: files
+    files:
+      - source: inir
+        destination: /
+
+  - type: script
+    scripts:
+      - inir-deps.sh
+
+  - type: default-flatpaks
+    configurations:
+      - notify: true
+        scope: system
+        install:
+          - io.missioncenter.MissionCenter
+          - re.fossplant.songrec
