@@ -1,0 +1,49 @@
+modules:
+  - type: dnf
+    repos:
+      copr:
+        - duxlabs/dms
+        - duxlabs/dux-repo
+      cleanup: true
+    install:
+      packages:
+        # Compositor, Shell & Greeter
+        - niri
+        - xwayland-satellite
+        - dms
+        - dux-greeter
+        - greetd
+        # Fingerprint Reader Support
+        - fprintd
+        - fprintd-pam
+        # Dux Labs Suite & Theming
+        - dgop
+        - danksearch
+        - dankcalendar
+        - dux-files
+        - matugen
+        - cava
+        - qt6ct-kde
+        - quickshell
+        - material-symbols-fonts
+        # Essential Helpers
+        - xdg-desktop-portal-gtk
+        - brightnessctl
+        - playerctl
+        - wl-clipboard
+
+  # 2. Copy default Niri & DMS configs into /etc/skel
+  - type: files
+    files:
+      - source: system
+        destination: /
+
+  # 3. Switch from Plasma Login Manager to greetd + enable fingerprint PAM
+  - type: script
+    snippets:
+      - "systemctl disable plasmalogin.service || true"
+      - "systemctl disable sddm.service || true"
+      - "systemctl enable greetd.service"
+      - "dms-greeter enable || true"
+      - "authselect enable-feature with-fingerprint || true"
+      - "authselect apply-changes || true"
