@@ -25,6 +25,8 @@ modules:
       packages:
         - micro
         - starship
+        - blackbox-terminal
+
     remove:
       packages:
         # example: removing firefox (in favor of the flatpak)
